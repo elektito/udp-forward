@@ -23,7 +23,7 @@ class UdpHandler(SocketServer.BaseRequestHandler):
         sock.sendto(encrypt(data), (fhost, fport))
         try:
             response = sock.recv(1024)
-            self.request[1].sendto(response, self.client_address)
+            self.request[1].sendto(encrypt(response), self.client_address)
         except socket.timeout:
             print 'timeout'
 
