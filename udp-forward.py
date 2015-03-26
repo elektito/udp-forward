@@ -25,10 +25,12 @@ class UdpHandler(SocketServer.BaseRequestHandler):
         try:
             response = sock.recv(1024)
             print 'Got a response.'
-            self.request[1].sendto(encrypt(response), self.client_address)
-            print 'Sent response back.'
         except socket.timeout:
             print 'Response timeout. Ignored.'
+            return
+
+        self.request[1].sendto(encrypt(response), self.client_address)
+        print 'Sent response back.'
 
 def main():
     global lhost, lport, fhost, fport
