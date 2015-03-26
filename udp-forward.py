@@ -17,15 +17,18 @@ def encrypt(data):
 
 class UdpHandler(SocketServer.BaseRequestHandler):
     def handle(self):
-        print 'got something'
+        print 'Got a request.'
         data = self.request[0]
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.sendto(encrypt(data), (fhost, fport))
+        print 'Forwarded the request.'
         try:
             response = sock.recv(1024)
+            print 'Got a response.'
             self.request[1].sendto(encrypt(response), self.client_address)
+            print 'Sent response back.'
         except socket.timeout:
-            print 'timeout'
+            print 'Response timeout. Ignored.'
 
 def main():
     global lhost, lport, fhost, fport
