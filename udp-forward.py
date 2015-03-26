@@ -15,7 +15,7 @@ def encrypt(data):
                              383 - x
     return ''.join([chr(char_encrypt(ord(ch))) for ch in data])
 
-class UdpHandler(SocketServer.BaseRequestHandler):
+class UdpHandler(SocketServer.ThreadingMixIn, SocketServer.BaseRequestHandler):
     def handle(self):
         print 'Got a request.'
         data = self.request[0]
