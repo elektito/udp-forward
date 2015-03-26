@@ -12,9 +12,10 @@ spoofers/sniffers.
 
 One intention of udp-forward is hiding DNS messages from DNS
 spoofers. You can run udp-forward in a remote server by running
-`./udp-forward.py 0.0.0.0:5353 8.8.8.8:53`. This starts listening to port
-5353, runs the encryption scheme on whatever it receives and forwards
-the results to 8.8.8.8:53 (Google's public DNS server).
+`./udp-forward.py 0.0.0.0:5353 8.8.8.8:53`. This starts listening to
+port 5353, runs the encryption scheme on whatever it receives and
+forwards the results to 8.8.8.8:53 (Google's public DNS server). The
+reply is also encrypted when received and forwarded back.
 
 You then need to run `sudo ./udp-forward.py 127.0.0.1:53
 remote-server:5353` on your local machine. The encryption scheme, when
