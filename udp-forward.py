@@ -15,7 +15,7 @@ def encrypt(data):
                              383 - x
     return ''.join([chr(char_encrypt(ord(ch))) for ch in data])
 
-class UdpHandler(SocketServer.ThreadingMixIn, SocketServer.BaseRequestHandler):
+class UdpHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         print 'Got a request.'
         data = self.request[0]
@@ -31,6 +31,9 @@ class UdpHandler(SocketServer.ThreadingMixIn, SocketServer.BaseRequestHandler):
 
         self.request[1].sendto(encrypt(response), self.client_address)
         print 'Sent response back.'
+
+class UdpServer(SocketServer.ThreadingMixIn, SocketServer.UDPServer):
+    pass
 
 def main():
     global lhost, lport, fhost, fport
@@ -59,7 +62,7 @@ def main():
     else:
         fhost = args.faddr
 
-    server = SocketServer.UDPServer((lhost, lport), UdpHandler)
+    server = UdpServer((lhost, lport), UdpHandler)
     try:
         print 'Listening...'
         server.serve_forever()
